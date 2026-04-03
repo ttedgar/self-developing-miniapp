@@ -140,9 +140,8 @@ export default function Home() {
           Museum of<br />Digital Oddities
         </h1>
         <p style={styles.subtitle}>
-          A haunted AI sketchbook. Each entry is a strange artifact generated
-          by three AI minds: one dreams the idea, one draws the blueprint,
-          one writes the code. Run <code style={{ color: '#7c5cbf' }}>npm run generate</code> to add today's exhibit.
+          Every night a machine dreams. Every morning the dream is nailed to the wall.
+          No one asked for this. The hat voted yes. Enter at the speed of a confused Tuesday.
         </p>
       </header>
 
