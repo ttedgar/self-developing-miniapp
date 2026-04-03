@@ -307,9 +307,8 @@ async function main() {
   }
 
   console.log(`\n  Generating page for ${targetDate}\n`);
-  console.log(`  Models: idea=${MODEL_IDEA.split('/').pop()}`);
-  console.log(`          plan=${MODEL_PLAN.split('/').pop()}`);
-  console.log(`          code=${MODEL_CODE.split('/').pop()}\n`);
+  console.log(`  Primary: ${MODEL_PRIMARY}`);
+  console.log(`  Fallback: ${MODEL_FALLBACK}\n`);
 
   // Step 1: Idea
   process.stdout.write('  [1/3] Generating idea... ');
