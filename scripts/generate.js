@@ -119,7 +119,7 @@ ENCOURAGED TERRITORY:
 Respond with ONLY a valid JSON object — no markdown, no explanation, no code fences:
 {
   "title": "Short punchy title (max 6 words)",
-  "description": "One sentence — what the user actually experiences on the page",
+  "description": "A dadaist/surrealist caption for the museum card — NOT a functional description. Write it like a fever dream exhibit label, a wrong translation, a non-sequitur that somehow feels true. 10-20 words. Examples: 'A horse made of appointments refuses to gallop.' / 'The button remembers you from a different mouth.' / 'Eleven feelings in a jar. The jar is also a feeling.'",
   "idea": "2-4 sentences describing the concept, what makes it weird, and why it works"
 }`;
 
