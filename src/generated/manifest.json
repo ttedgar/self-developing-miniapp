@@ -86,5 +86,44 @@
       "visual_style": "Aged government document aesthetic — off-white/cream background (#f5f0e8), dark navy text (#1a2340), serif fonts, thin borders, faded red stamp ink (#8b1a1a). Dense bureaucratic layout with form fields, section dividers, fine print. Slightly yellowed paper feel. Official seal placeholder using unicode/emoji. Austere, deadpan, institutional.",
       "key_implementation_notes": "Store all feeling-to-livestock conversions as a hardcoded object map with keys matching dropdown values, each entry containing quantity string, livestock array, footnotes array citing fake Acts and Directives, and a stern Ministry warning — all authored for comic specificity. The stamp is an absolutely positioned div with text 'PROCESSED — MINISTRY OF APPROXIMATE EMOTIONS' rotated ~-15deg, rendered in red with border, toggling between pre/post animation inline styles via showStamp+stamped booleans. Use a formKey as the key prop on the form container to force clean remount on reset. The isCalculating state shows a blinking 'PROCESSING REQUEST...' message with ellipsis animation via a setInterval updating a dot-count state."
     }
+  },
+  {
+    "date": "2026-04-05",
+    "title": "The Mouth That Knows Your Name",
+    "description": "A vowel escaped from a dictionary and has been living behind your refrigerator. It recognizes you.",
+    "idea": "A single large animated mouth dominates the screen, rendered in fleshy, slightly wrong colors, slowly moving and muttering to itself. When the user types anything — anything at all — the mouth reads it back phoneme by phoneme in increasingly inappropriate emotional registers: their grocery list with the gravity of a funeral oration, a random letter with the joy of a birth announcement, silence with existential accusation. The mouth has opinions about what you type and will editorialize ('that word again,' 'interesting choice,' 'we both know what you meant'). The longer the user interacts, the more the mouth seems to remember previous inputs and reference them obliquely. Nothing is stored. The mouth is lying. It just wants you to feel known.",
+    "plan": {
+      "title": "The Mouth That Knows Your Name",
+      "state_variables": [
+        "inputText: current text the user is typing",
+        "mouthPhase: 'idle'|'speaking'|'muttering'|'accusing' — drives animation state",
+        "currentUtterance: the mouth's current editorial response string",
+        "emotionalRegister: 'funeral'|'birth'|'existential'|'suspicious'|'tender'|'offended' — cycles and escalates",
+        "interactionCount: number of times user has typed/submitted, drives 'memory' illusions",
+        "displayedPhonemes: array of characters being revealed one by one",
+        "phonemeIndex: current index in phoneme reveal sequence",
+        "mouthOpenAmount: 0-1 float controlling jaw animation",
+        "isBlinking: boolean for eye-like lid animation on mouth corners",
+        "previousWordHints: last 2-3 'remembered' word fragments used in editorials (fake memory)"
+      ],
+      "effects": [
+        "Idle mouth animation: oscillate mouthOpenAmount on a slow sine wave with slight irregularity using setInterval when mouthPhase is 'idle'",
+        "Phoneme reveal: when inputText changes, trigger character-by-character reveal via setInterval updating phonemeIndex, set mouthPhase to 'speaking'",
+        "Editorial generation: after phoneme reveal completes, pick editorial comment based on emotionalRegister + interactionCount, display as currentUtterance",
+        "Emotional escalation: every 3 interactions, shift emotionalRegister to next in escalation sequence",
+        "Muttering loop: when idle >4s, generate a random sotto voce mutter string and briefly animate mouth",
+        "Blink effect: random interval (3-8s) toggles isBlinking for 200ms to animate mouth corners drooping"
+      ],
+      "key_interactions": [
+        "User types in a hidden/minimal input field — each keystroke triggers mouth response",
+        "After brief pause in typing, mouth 'reads back' what was typed phoneme by phoneme with animation",
+        "Mouth editorializes after readback with register-appropriate comment referencing previousWordHints",
+        "Clicking the mouth itself triggers an accusatory response ('you touched me')",
+        "Pressing Enter submits and triggers the most dramatic emotional register response",
+        "Hovering near mouth causes subtle recoil/lean animation via mouse position tracking"
+      ],
+      "visual_style": "Near-black background (#0a0806). Mouth rendered purely in CSS/divs — fleshy pinks and wet reds (#c97b7b, #8b2020, #f0c0b0), slightly desaturated and wrong. Lips slightly too large. Text responses appear in a pale, serif-like monospace below. Overall mood: intimate, wrong, uncomfortably aware.",
+      "key_implementation_notes": "Mouth shape built entirely from CSS border-radius div layers — upper lip, lower lip, teeth strip, dark throat — animated via inline style transforms and mouthOpenAmount state. Editorial comments stored as a large hardcoded lookup table keyed by emotionalRegister + interactionCount bucket, with template slots for previousWordHints to fake memory. Mouse position tracked via onMouseMove on container to drive subtle mouth-lean transform. All 'memory' is purely generative illusion — previousWordHints stores only 2 fragments from recent inputs to splice into pre-written editorial strings, making the mouth seem to recall without actually storing anything meaningful."
+    }
   }
 ]
