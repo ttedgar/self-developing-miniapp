@@ -210,5 +210,36 @@
       "visual_style": "Pale institutional gray-green background (#e8ebe6), monospace fonts throughout, muted olive and beige card faces, red-orange error codes, clinical form aesthetics — think DMV meets medical records, cold fluorescent mood",
       "key_implementation_notes": "Each gesture card is a form-like div with labeled fields rendered as mock input rows (read-only). The limb animation uses two absolutely-positioned SVG arc/curve shapes (abstract arm silhouettes) whose translateX values are driven by a useEffect interval that increments then abruptly halts a few pixels apart. Error codes are drawn from a fixed pool of ERR_ strings and displayed in a modal-style overlay with a case number. The queue array is the single source of truth — new entries are prepended with a 'NEWLY FILED' badge and a timestamp derived from Date.now()."
     }
+  },
+  {
+    "date": "2026-04-09",
+    "title": "Competitive Listening Championship Finals",
+    "description": "Forty-three sounds are waiting to be heard in the correct order. The sounds do not agree on what correct means.",
+    "idea": "The user is presented with an official tournament bracket — THE WORLD COMPETITIVE LISTENING CHAMPIONSHIP, SEMIFINALS — in which they must judge which of two sounds 'wins' by clicking on it. The sounds are things like 'the sound a thought makes when you almost have it,' 'ice deciding to melt,' 'a very confident wrong answer,' and 'the specific frequency of being watched by a painting.' After each choice, the winning sound advances but mutates slightly — gaining traits from the loser, becoming a hybrid abomination. By the finals, the last remaining sound is a description so long and contradictory it wraps around the screen. The user is then awarded a certificate declaring them 'Certified Listener, Grade: Uncertain' with a wax seal that slowly drips off the page. The whole thing is formatted with the intense graphic design language of ESPN bracket sports — bold fonts, high contrast, team colors — applied with complete sincerity to sounds that cannot exist.",
+    "plan": {
+      "title": "Competitive Listening Championship Finals",
+      "state_variables": [
+        "bracket: array of 8 first-round matchups with sound descriptions",
+        "currentRound: which round we're on (0=R1, 1=QF, 2=SF, 3=Final, 4=Certificate)",
+        "currentMatchup: index of current matchup being judged in this round",
+        "winners: array of sounds that have won each matchup so far",
+        "champion: the final mutated sound description string",
+        "sealDrip: number 0-100 controlling wax seal drip animation",
+        "resultFlash: null or 'left'/'right' for win flash animation",
+        "mutationLog: array of hybrid trait strings appended after each win"
+      ],
+      "effects": [
+        "useEffect on currentRound===4: start sealDrip interval incrementing from 0 to 100 over 4 seconds then clear",
+        "useEffect on resultFlash: clear flash after 600ms timeout"
+      ],
+      "key_interactions": [
+        "Click left or right sound to choose winner — triggers flash, merges descriptions, advances bracket",
+        "After both sounds in a matchup shown, clicking advances to next matchup or next round",
+        "On certificate screen, a 'PRINT CERTIFICATE' button triggers window.print() styled print view",
+        "Hovering a sound card shows subtle glow/pulse as if the sound is 'performing'"
+      ],
+      "visual_style": "ESPN/sports broadcast aesthetic: near-black background (#0a0a0f), electric blue (#0057FF) and red (#CC0000) team colors, bold condensed uppercase typography, gold accent (#FFD700) for championship elements. Bracket lines in white. Certificate is cream (#F5F0E8) with red wax seal SVG. High contrast, intense, completely sincere.",
+      "key_implementation_notes": "Sounds array of 16 absurdist descriptions hard-coded; after each matchup the winner mutates by appending ' (now carrying traces of: [loser snippet])' building a Frankenstein description. Bracket rendered as flex columns with SVG connector lines between rounds. The champion description in finals uses fontSize scaling down as string grows, eventually wrapping in a marquee-like scrollable div. Wax seal is an inline SVG circle with a drip path whose height is animated via sealDrip state, eventually disappearing off screen."
+    }
   }
 ]
