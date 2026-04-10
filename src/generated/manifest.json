@@ -241,5 +241,39 @@
       "visual_style": "ESPN/sports broadcast aesthetic: near-black background (#0a0a0f), electric blue (#0057FF) and red (#CC0000) team colors, bold condensed uppercase typography, gold accent (#FFD700) for championship elements. Bracket lines in white. Certificate is cream (#F5F0E8) with red wax seal SVG. High contrast, intense, completely sincere.",
       "key_implementation_notes": "Sounds array of 16 absurdist descriptions hard-coded; after each matchup the winner mutates by appending ' (now carrying traces of: [loser snippet])' building a Frankenstein description. Bracket rendered as flex columns with SVG connector lines between rounds. The champion description in finals uses fontSize scaling down as string grows, eventually wrapping in a marquee-like scrollable div. Wax seal is an inline SVG circle with a drip path whose height is animated via sealDrip state, eventually disappearing off screen."
     }
+  },
+  {
+    "date": "2026-04-10",
+    "title": "Please Rate Your Existence",
+    "description": "Five stars blink like nervous eyelids. The universe has left you a follow-up survey. It needs this for its records.",
+    "idea": "The user is presented with a customer satisfaction survey — clean, corporate, utterly sincere — except the product being reviewed is their own existence, delivered by 'The Management.' Questions include 'How satisfied were you with the texture of Tuesday?' and 'Would you recommend being you to a friend?' with radio buttons ranging from 'Warmly' to 'With Reservations' to 'I would not do this to a friend.' Each answer triggers a brief, solemn automated response from the system ('Thank you. This feedback has been noted and will affect nothing.'). At the end, instead of a thank-you screen, a new survey begins — this one reviewing the experience of completing the first survey, which eventually reviews the experience of reviewing the experience, collapsing into a polite, pastel-colored infinite regress. The design is aggressively friendly: rounded corners, soft lavender, a progress bar that never quite reaches 100%, a mascot that is just a slightly worried oval.",
+    "plan": {
+      "title": "Please Rate Your Existence",
+      "state_variables": [
+        "surveyDepth: number — which recursive layer of survey we're on (0=existence, 1=reviewing the survey, 2=reviewing the review, etc.)",
+        "currentQuestion: number — index of current question in active survey",
+        "selectedAnswer: string|null — currently selected radio option before confirming",
+        "systemResponse: string|null — the solemn automated response shown after answering",
+        "answers: array — collected answers for current survey",
+        "blinkState: boolean — toggles star blink animation",
+        "progressWobble: number — fake progress percentage that never hits 100",
+        "mascotWorry: number — 0-3 worry level affecting mascot expression"
+      ],
+      "effects": [
+        "setInterval every 1200ms toggling blinkState for star blink effect",
+        "When systemResponse is set, auto-clear it after 2500ms and advance to next question",
+        "When currentQuestion advances past last question, increment surveyDepth and reset currentQuestion to 0 after a brief delay",
+        "useEffect on currentQuestion/surveyDepth to update progressWobble to a value that asymptotically approaches but never exceeds 94"
+      ],
+      "key_interactions": [
+        "Clicking a radio option sets selectedAnswer and shows confirm button",
+        "Clicking confirm triggers solemn system response display and records answer",
+        "Stars blink independently via blinkState — each star uses a staggered opacity calculation",
+        "Mascot (SVG oval with eyes) shifts expression based on surveyDepth — more worried at deeper levels",
+        "Progress bar animates smoothly but caps at ~94% with a subtle jitter"
+      ],
+      "visual_style": "Aggressively corporate-friendly: soft lavender (#E8E4F0) background, white card with heavy border-radius, muted purple (#7B68AA) accents, pale mint for system responses, pastel yellow stars, Helvetica/system-ui font, generous padding, everything slightly too cheerful",
+      "key_implementation_notes": "Define survey questions as an array of objects with question text and answer options — generate depth-aware questions dynamically for layers beyond 0 (e.g. 'How satisfied were you with your satisfaction rating?'). The mascot is a pure SVG inline element: an ellipse with two small circle eyes whose vertical position shifts upward as worry increases. System responses are drawn from a fixed pool of solemn non-sequiturs. surveyDepth caps display concerns but functionally loops forever — questions at depth 3+ are procedurally generated from templates to avoid hardcoding infinite content."
+    }
   }
 ]
