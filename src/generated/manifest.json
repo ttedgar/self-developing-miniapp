@@ -275,5 +275,40 @@
       "visual_style": "Aggressively corporate-friendly: soft lavender (#E8E4F0) background, white card with heavy border-radius, muted purple (#7B68AA) accents, pale mint for system responses, pastel yellow stars, Helvetica/system-ui font, generous padding, everything slightly too cheerful",
       "key_implementation_notes": "Define survey questions as an array of objects with question text and answer options — generate depth-aware questions dynamically for layers beyond 0 (e.g. 'How satisfied were you with your satisfaction rating?'). The mascot is a pure SVG inline element: an ellipse with two small circle eyes whose vertical position shifts upward as worry increases. System responses are drawn from a fixed pool of solemn non-sequiturs. surveyDepth caps display concerns but functionally loops forever — questions at depth 3+ are procedurally generated from templates to avoid hardcoding infinite content."
     }
+  },
+  {
+    "date": "2026-04-11",
+    "title": "Sincere Apology from Your Furniture",
+    "description": "The ottoman has been holding something in. The lamp witnessed everything. Wood remembers pressure differently than you do.",
+    "idea": "The user's screen fills with a series of handwritten-style letters from their furniture, each one a deeply sincere, specific, and slightly accusatory apology for something the furniture did or witnessed. The couch apologizes for absorbing seventeen years of your posture and returning none of it. The chair by the door apologizes for how long it held your coat that one November. Each letter is animated to appear as if being typed in real time, with crossed-out words, second thoughts, and postscripts that spiral into existential furniture philosophy. The user can click 'Accept Apology' or 'I'm Not Ready' — accepting causes the furniture to immediately send a follow-up letter that is somehow worse, more detailed, more aware of you than any object should be. Rejecting causes a long, hurt silence, then a new letter from a different piece of furniture that has been watching the whole exchange.",
+    "plan": {
+      "title": "Sincere Apology from Your Furniture",
+      "state_variables": [
+        "currentLetter: object with furniture name, letter text segments, and metadata",
+        "displayedText: string of text currently shown (for typewriter effect)",
+        "letterIndex: number tracking which letter in the sequence we're on",
+        "phase: enum of 'typing' | 'waiting' | 'silence' | 'followup'",
+        "charIndex: number for typewriter character position",
+        "crossouts: array of {start,end} ranges to render with strikethrough",
+        "postscripts: array of strings appended after main letter",
+        "silenceTimer: number counting seconds of hurt silence",
+        "letterHistory: array of past letter summaries shown as folded envelopes",
+        "isShaking: boolean for rejection hurt animation"
+      ],
+      "effects": [
+        "Typewriter effect: interval that increments charIndex through currentLetter text segments, pausing at punctuation, inserting crossout markers mid-word occasionally",
+        "Silence countdown: when phase==='silence', interval counts up silenceTimer display, then after 8-12 seconds triggers new furniture letter",
+        "On letterIndex change: reset displayedText, charIndex, phase to 'typing', select next furniture piece and generate its letter content from predefined pool",
+        "Postscript reveal: after main text finishes typing, sequentially type each postscript with a delay between them"
+      ],
+      "key_interactions": [
+        "Accept Apology button: triggers phase='followup', loads a worse more-detailed follow-up letter from same furniture, button only visible when phase==='waiting'",
+        "I'm Not Ready button: sets phase='silence', shows hurt silence UI with timer, eventually loads letter from new furniture that references the rejection",
+        "Click folded envelope in history: briefly shows a one-line summary of that letter in a tooltip",
+        "Hover over furniture name in letter header: shows a small ASCII drawing of that furniture piece"
+      ],
+      "visual_style": "Aged cream/ivory background, ink-brown and faded sepia tones. Handwritten-style font via font-family serif with letter-spacing tweaks. Letters appear on slightly off-white paper cards with subtle drop shadow and faint ruled lines. Crossed-out text in red-brown. Postscripts in smaller, slantier style. Overall mood: melancholy domestic intimacy, like finding old letters in a drawer.",
+      "key_implementation_notes": "Store all furniture letters as a predefined array of objects with name, opening, body segments (some marked as crossouts), and postscript arrays — no fetch needed. Render the typewriter text by splitting into spans, applying strikethrough style to ranges tracked in crossouts state. The 'worse follow-up' letters should reference specific details from the first letter using template strings that pull from the same furniture object's metadata fields. Silence UI is just a centered italic counter with the furniture's name displayed dimly, creating dread through emptiness."
+    }
   }
 ]
